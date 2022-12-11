@@ -1,32 +1,26 @@
 import React from 'react';
-import { Text, Image, View } from 'react-native'
+import { Text, Image, View, Dimensions } from 'react-native'
 import { styles } from '../core/styles'
 import Button from '../components/Button';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function Home({ navigation }) {
 
     return (
 
-        <View style={[styles.container, { flexDirection: "column" }]}>
-            <View style={{ flex: 1.3, backgroundColor: "#FFF"}} >
+        <View style={styles.container}>
+            <StatusBar style="auto"/>
+            <View style={{backgroundColor: "#fff",height: Dimensions.get('window').height/3}} >
                 <Text style={styles.titulo}>SDrop</Text>
                 <Text style={styles.infoHome}>Tus plantas más vivas</Text>
-                
             </View>
-            <View style={{ 
-                flex: 2.5, 
-                backgroundColor: "#FFF", 
-                justifyContent: "center", 
-                alignItems: "center",
-                }} >
+            <View >
                 <View style={styles.containerPlanta}>
                     <Image 
                     style={{
-                        width: 450,
-                        height: 350,
-                        resizeMode: 'contain',
-                        borderRadius: 20,
+                        width: Dimensions.get('window').width/2,
+                        height: Dimensions.get('window').height/5,              
                     }}
                     source={require('../assets/illustration_1.png')}/>
                 </View>    
@@ -36,10 +30,8 @@ export default function Home({ navigation }) {
                 <View  style={styles.containerBotones}>
                     <Text style={styles.subTitle}>Seleccione una de las opciones:</Text>
                     <View style={{ 
-                        backgroundColor: "#FFF", 
-                        justifyContent: "flex-start", 
+                        backgroundColor: "#fff", 
                         alignItems: "center",
-                        paddingTop: 50,
                         }}>
                         <Button
                             mode="contained"
