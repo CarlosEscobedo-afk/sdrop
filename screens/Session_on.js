@@ -1,20 +1,15 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native'
+import { StatusBar } from "expo-status-bar";
+import { Text, View, Image,ScrollView, Dimensions } from 'react-native'
 import { styles } from '../core/styles';
 
 export default function Home({ navigation }) {
 
     return (
-
-        <View style={[styles.container, { flexDirection: "column" }]}>
-            <View style={ { 
-                flex: 0.8,
-                backgroundColor:"#00a46c",
-                height:"20%",
-                borderBottomLeftRadius:20,
-                borderBottomRightRadius:20,
-                paddingHorizontal:20
-                }} >
+        <ScrollView>
+        <View style={styles.container}>
+        <StatusBar style="auto" />
+            <View style={styles.mensajeSuperiorInterna} >
                 <View style={styles.headerContainer}>
                     <View style={ {width:"90%"} } >
                         <Text style={ styles.headerText }>
@@ -37,10 +32,11 @@ export default function Home({ navigation }) {
                 <View style={styles.containerPlanta}>
                     <Image 
                     style={{
-                        width: 450,
-                        height: 250,
+                        backgroundColor:"#fff",
+                        width: Dimensions.get('window').width/2,
+                        height: 100,
                         resizeMode: 'contain',
-                        borderRadius: 20,
+                        borderRadius: 40,
                     }}
                     source={require('../assets/6.jpg')}/>
                 </View>    
@@ -103,5 +99,6 @@ export default function Home({ navigation }) {
                 </View>
             </View>
         </View>
+        </ScrollView>
       );
 }

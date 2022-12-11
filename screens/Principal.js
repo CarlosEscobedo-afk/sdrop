@@ -1,24 +1,37 @@
 import React from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { StatusBar } from "expo-status-bar";
+import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from '../core/styles';
-
+import {  collection, query,where, getDocs} from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig,db,app } from '../firebase-config';
 export default function Home({ navigation }) {
 
-  return (
+  const enviarDatos = async () => {
+    const docRef = collection(db,'informacion');
 
-    <View style={[styles.container, { flexDirection: "column" }]}>
-        <View style={ { 
-            flex: 0.3,
-            backgroundColor:"#00a46c",
-            height:"5%",
-            borderBottomLeftRadius:20,
-            borderBottomRightRadius:20,
-            paddingHorizontal:20
-            }} >
+    const q = query(docRef,where('id','==',2))
+
+    const querySnap = await getDocs(q)
+    
+    querySnap.forEach((doc)=>{
+      console.log(doc.id,'=>',doc.data('hum_min'));
+      return (doc.get('name_planta'))
+    });
+  
+  }
+  
+  console.log("hola",enviarDatos())
+  return (
+    <ScrollView>
+    
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+        <View style={ styles.mensajeSuperior } >
             <View style={styles.headerContainer}>
                 <View style={ {width:"90%"} } >
-                    <Text style={ styles.headerText }>
-                        Hola Omar
+                     <Text style={ styles.headerText }>
+                      Hola 
                     </Text>
                     <Text style={ styles.HeaderText }>
                         Aquí podras ver las plantas que tienes actualmente.
@@ -27,13 +40,7 @@ export default function Home({ navigation }) {
             </View>
             
         </View>
-        <View style={{ 
-            flexDirection:"row", 
-            backgroundColor: "#FFF", 
-            justifyContent: "center", 
-            alignItems: "center",
-            
-            }} >
+        <View style={styles.contenedorDeVarias} >
             <View style={styles.containerPlanta}>
               <TouchableOpacity 
                   onPress={()=>navigation.navigate("Session_on")}
@@ -44,13 +51,11 @@ export default function Home({ navigation }) {
                       width: 180,
                       height: 230,
                       resizeMode: 'contain',
-                      borderRadius: 20,
+                      borderRadius: 30,
                   }}
                   source={require('../assets/6.jpg')}/>
                 <View style={ styles.containerCard }>
-                  <Text style={{
-                      fontWeight:"bold"
-                  }}>Pilea peperomioides</Text>
+                  <Text style={styles.textoNombrePlanta}>Pilea peperomioides</Text>
                 </View>
               </TouchableOpacity>
             </View> 
@@ -71,9 +76,7 @@ export default function Home({ navigation }) {
                   }}
                   source={require('../assets/6.jpg')}/>
                 <View style={ styles.containerCard }>
-                  <Text style={{
-                      fontWeight:"bold"
-                  }}>Pilea peperomioides</Text>
+                <Text style={styles.textoNombrePlanta}>Pilea peperomioides</Text>
                 </View>
               </TouchableOpacity>
             </View>    
@@ -110,5 +113,6 @@ export default function Home({ navigation }) {
                 </View>
             </View>
     </View>
+    </ScrollView>
   );
 }

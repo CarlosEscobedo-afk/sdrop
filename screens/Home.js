@@ -20,7 +20,9 @@ export default function Home({ navigation }) {
                     <Image 
                     style={{
                         width: Dimensions.get('window').width/2,
-                        height: Dimensions.get('window').height/5,              
+                        height: Dimensions.get('window').height/5,
+                        resizeMode:'contain',
+                             
                     }}
                     source={require('../assets/illustration_1.png')}/>
                 </View>    

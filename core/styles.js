@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export const styles = StyleSheet.create({
   // Estilos para REGISTRO e INICIO de sesion
   containerSesion: {
     flex: 1,
-    backgroundColor: "red",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -14,17 +14,9 @@ export const styles = StyleSheet.create({
     width: "80%",
     height: 50,
     marginTop: 20,
+    paddingStart: 30,
     borderRadius: 30,
-    backgroundColor: "#fff",
-  },
-  buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 8,
-    paddingVertical: 9,
-    borderRadius: 10,
-    alignSelf: "center",
-    marginBottom: 6,
+    backgroundColor: "#F2EAE9",
   },
 
   container: {
@@ -42,23 +34,22 @@ export const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 75,
-    width: "100%",
+    marginTop: 50,
   },
   headerText: {
-    fontSize: 40,
+    fontSize: RFValue(27),
     color: "#FFF",
+    paddingLeft: 25,
     fontWeight: "bold",
+    textAlign: "left",
   },
   HeaderText: {
     paddingTop: 10,
     paddingLeft: 25,
-    fontSize: 20,
+    fontSize: RFValue(15),
     color: "#FFF",
     textAlign: "left",
   },
-
-  
 
   // Recuadro de informacion
   containerInfo: {
@@ -109,9 +100,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   titulo: {
-    marginTop:20,
+    marginTop: 20,
     textAlign: "center",
-    fontSize: RFValue(80),
+    fontSize: RFValue(70),
     color: "#34434D",
     fontWeight: "bold",
   },
@@ -133,8 +124,8 @@ export const styles = StyleSheet.create({
   // RECUARDO DE PLANTA
   containerPlanta: {
     backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',    
   },
 
   // Sector botones
@@ -154,7 +145,7 @@ export const styles = StyleSheet.create({
   containerTouchO: {
     height: 270,
     elevation: 2,
-    backgroundColor: "#FFF",
+    backgroundColor: "#fff",
     marginTop: 10,
     marginHorizontal: 20,
     borderRadius: 15,
@@ -166,4 +157,35 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
     paddingHorizontal: 10,
   },
+  button: {
+    width: "60%",
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  mensajeSuperior: {
+    width: Dimensions.get("window").width,
+    height: "24%",
+    backgroundColor: "#00a46c",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+mensajeSuperiorInterna: {
+  width: Dimensions.get("window").width,
+  height: "20%",
+  backgroundColor: "#00a46c",
+  borderBottomLeftRadius: 20,
+  borderBottomRightRadius: 20,
+},
+  contenedorDeVarias:{ 
+    flexDirection:"row", 
+    backgroundColor: "#fff", 
+    justifyContent: "center", 
+    alignItems: "center",
+    },
+textoNombrePlanta:{
+    fontWeight:"bold",
+    fontSize: RFValue(13),
+    justifyContent: 'center',
+    alignItems: 'center',   
+}
 });
