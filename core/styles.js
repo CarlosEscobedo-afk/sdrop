@@ -184,7 +184,7 @@ mensajeSuperiorInterna: {
     },
 textoNombrePlanta:{
     fontWeight:"bold",
-    fontSize: RFValue(13),
+    fontSize: RFValue(8),
     justifyContent: 'center',
     alignItems: 'center',   
 }

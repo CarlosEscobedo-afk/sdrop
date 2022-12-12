@@ -2,30 +2,34 @@ import React from 'react';
 import { StatusBar } from "expo-status-bar";
 import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from '../core/styles';
-import {  collection, query,where, getDocs} from "firebase/firestore";
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig,db,app } from '../firebase-config';
-export default function Home({ navigation }) {
+import {  onSnapshot, orderBy,collection, query,where, getDocs} from "firebase/firestore";
+import { db } from '../firebase-config';
+import Planta from '../components/Planta';
+export default function Principal({ navigation }) {
 
-  const enviarDatos = async () => {
-    const docRef = collection(db,'informacion');
 
-    const q = query(docRef,where('id','==',2))
+  const [plantas, setPlanta] = React.useState([]);
 
-    const querySnap = await getDocs(q)
-    
-    querySnap.forEach((doc)=>{
-      console.log(doc.id,'=>',doc.data('hum_min'));
-      return (doc.get('name_planta'))
-    });
+  React.useLayoutEffect(() =>{
+    const collectionRef = collection(db,'informacion');
+    const q = query(collectionRef,where('id','==',1))
+
+    const unsuscribe = onSnapshot(q, querySnapshot =>{
+      setPlanta(
+        querySnapshot.docs.map(doc=>({
+          id: doc.id,
+          name_planta: doc.data().name_planta,
+        }))
+      )
+    })
+    return unsuscribe;
+  },[])
+
   
-  }
-  
-  console.log("hola",enviarDatos())
+
   return (
-    <ScrollView>
-    
     <View style={styles.container}>
+      <ScrollView>
       <StatusBar style="auto" />
         <View style={ styles.mensajeSuperior } >
             <View style={styles.headerContainer}>
@@ -38,49 +42,12 @@ export default function Home({ navigation }) {
                     </Text>
                 </View>
             </View>
-            
         </View>
-        <View style={styles.contenedorDeVarias} >
-            <View style={styles.containerPlanta}>
-              <TouchableOpacity 
-                  onPress={()=>navigation.navigate("Session_on")}
-                  style={ styles.containerTouchO }
-              >
-                <Image 
-                  style={{
-                      width: 180,
-                      height: 230,
-                      resizeMode: 'contain',
-                      borderRadius: 30,
-                  }}
-                  source={require('../assets/6.jpg')}/>
-                <View style={ styles.containerCard }>
-                  <Text style={styles.textoNombrePlanta}>Pilea peperomioides</Text>
-                </View>
-              </TouchableOpacity>
-            </View> 
-            
-            <View style={styles.containerPlanta}>
-              
-              <TouchableOpacity 
-                  onPress={()=>navigation.navigate("Session_on")}
-                  style={ styles.containerTouchO }
-              >
-                <Image 
-                  style={{
-                      width: 180,
-                      height: 230,
-                      resizeMode: 'contain',
-                      borderRadius: 20,
-                      
-                  }}
-                  source={require('../assets/6.jpg')}/>
-                <View style={ styles.containerCard }>
-                <Text style={styles.textoNombrePlanta}>Pilea peperomioides</Text>
-                </View>
-              </TouchableOpacity>
-            </View>    
-        </View>
+
+
+        {plantas.map(planta=><Planta key={planta.id} {...planta}/>  )}
+        
+        
         <View style={{ 
                 flex: 1, 
                 backgroundColor: "#FFF", 
@@ -88,7 +55,6 @@ export default function Home({ navigation }) {
                 alignItems: "center",
                 }} >
                 <View style={styles.containerEstado}>
-
                     <Text style={ styles.infoTitulo }>
                         Una de tus plantas está  
                     </Text>
@@ -103,7 +69,6 @@ export default function Home({ navigation }) {
                             borderRadius: 40,
                         }}
                         source={require('../assets/sad.png')}/>
-
                     </View>
                     
                     <Text style={ styles.infoTitulo }>
@@ -112,7 +77,7 @@ export default function Home({ navigation }) {
                     
                 </View>
             </View>
+      </ScrollView>
     </View>
-    </ScrollView>
   );
 }
