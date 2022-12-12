@@ -2,10 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import Button from "../components/Button";
 import React from "react";
 import { StyleSheet, Text, TextInput, View, Alert } from "react-native";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
 import { useNavigation } from "@react-navigation/native";

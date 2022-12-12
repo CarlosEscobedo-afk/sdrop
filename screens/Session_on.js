@@ -1,104 +1,89 @@
-import React from 'react';
+import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Image,ScrollView, Dimensions } from 'react-native'
-import { styles } from '../core/styles';
+import { Text, View, Image, ScrollView, Dimensions } from "react-native";
+import { styles } from "../core/styles";
+import Situacion from "../components/Situacion";
+import { db } from "../firebase-config";
+import { onSnapshot, collection, query, where } from "firebase/firestore";
+export default function Session_on({ route }) {
+  const { humMax } = route.params;
+  const { idSituacion } = route.params;
+  const { humMin } = route.params;
+  const { tempMax } = route.params;
+  const { tempMin } = route.params;
 
-export default function Home({ navigation }) {
+  const [situaciones, setSituacion] = React.useState([]);
 
-    return (
-        <ScrollView>
-        <View style={styles.container}>
-        <StatusBar style="auto" />
-            <View style={styles.mensajeSuperiorInterna} >
-                <View style={styles.headerContainer}>
-                    <View style={ {width:"90%"} } >
-                        <Text style={ styles.headerText }>
-                            Hola Omar
-                        </Text>
+  React.useLayoutEffect(() => {
+    const collectionRef = collection(db, "arduino");
 
-                        <Text style={ styles.HeaderText }>
-                            Aquí podras ver la información de tu planta.
-                        </Text>
-                    </View>
-                </View>
-                
-            </View>
-            <View style={{ 
-                flex: 1.2, 
-                backgroundColor: "#FFF", 
-                justifyContent: "center", 
-                alignItems: "center",
-                }} >
-                <View style={styles.containerPlanta}>
-                    <Image 
-                    style={{
-                        backgroundColor:"#fff",
-                        width: Dimensions.get('window').width/2,
-                        height: 100,
-                        resizeMode: 'contain',
-                        borderRadius: 40,
-                    }}
-                    source={require('../assets/6.jpg')}/>
-                </View>    
-            </View>
-            <View style={{ 
-                flex: 1.5, 
-                backgroundColor: "#FFF",
-                }} >
-                <View style={styles.containerInfo}>
+    const q = query(collectionRef, where("id", "==", idSituacion));
 
-                    <Text style={ styles.infoTitulo }>
-                        Humedad actual: 
-                    </Text>
-                    <Text style={ styles.info }>
-                        50%
-                    </Text>
-                    
-                    <Text style={ styles.infoTitulo }>
-                        Temperatura actual: 
-                    </Text>
-                    <Text style={ styles.infoRojo}> 
-                        32 grados
-                    </Text>
-                    
-                    <Text style={ styles.infoTitulo }>
-                        Tiempo de ultima medicion: 
-                    </Text>
-                    <Text style={ styles.info }> 
-                        15:13
-                    </Text>
-                </View>
-            </View>
-
-            <View style={{ 
-                flex: 1, 
-                backgroundColor: "#FFF", 
-                justifyContent: "flex-start", 
-                alignItems: "center",
-                }} >
-                <View style={styles.containerEstado}>
-
-                    <Text style={ styles.infoTitulo }>
-                        Tú planta está  
-                    </Text>
-
-                    <View style={styles.containerEstadoPlanta}>
-
-                        <Image 
-                        style={{
-                            width: 100,
-                            height: 100,
-                            resizeMode: 'contain',
-                            borderRadius: 40,
-                        }}
-                        source={require('../assets/sad.png')}/>
-
-                    </View>
-                    
-                    
-                </View>
-            </View>
-        </View>
-        </ScrollView>
+    const unsuscribe = onSnapshot(q, (querySnapshot) => {
+      setSituacion(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          temp: doc.data().temp,
+          hum: doc.data().hum,
+          hum_max: humMax,
+          hum_min: humMin,
+          temp_max: tempMax,
+          temp_min: tempMin,
+        }))
       );
+    });
+    return unsuscribe;
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        <StatusBar style="auto" />
+        <View style={styles.mensajeSuperiorInterna}>
+          <View style={styles.headerContainer}>
+            <View style={{ width: "90%" }}>
+              <Text style={styles.headerText}>Hola</Text>
+
+              <Text style={styles.HeaderText}>
+                Aquí podras ver la información de tu planta.
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1.2,
+            backgroundColor: "#FFF",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View style={styles.containerPlanta}>
+            <Image
+              style={{
+                backgroundColor: "#fff",
+                width: Dimensions.get("window").width / 2,
+                height: 100,
+                resizeMode: "contain",
+                borderRadius: 40,
+              }}
+              source={require("../assets/6.jpg")}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1.5,
+            backgroundColor: "#FFF",
+          }}
+        >
+          <View style={styles.containerInfo}>
+            {situaciones.map((situacion) => (
+              <Situacion key={situacion.id} {...situacion} />
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
