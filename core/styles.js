@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
 
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
 
   // Header para session_on
@@ -54,7 +55,6 @@ export const styles = StyleSheet.create({
   // Recuadro de informacion
   containerInfo: {
     padding: 20,
-    elevation: 3,
     backgroundColor: "#FFF",
     marginLeft: 20,
     marginTop: 20,
@@ -87,12 +87,20 @@ export const styles = StyleSheet.create({
   containerEstado: {
     paddingLeft: 20,
     paddingBottom: 20,
-    elevation: 3,
-    backgroundColor: "#FFF",
+    backgroundColor: "#fff",
     marginTop: 5,
     borderRadius: 5,
-    marginBottom: 10,
     width: "92%",
+    height: 300,
+  },
+  containerEstadoS: {
+    paddingLeft: 20,
+    paddingBottom: 20,
+    backgroundColor: "#fff",
+    marginTop: 5,
+    borderRadius: 5,
+    width: "92%",
+    height: 600,
   },
   containerEstadoPlanta: {
     padding: 10,
@@ -124,8 +132,11 @@ export const styles = StyleSheet.create({
   // RECUARDO DE PLANTA
   containerPlanta: {
     backgroundColor: "#fff",
-    justifyContent: 'center',
-    alignItems: 'center',    
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
   },
 
   // Sector botones
@@ -144,7 +155,7 @@ export const styles = StyleSheet.create({
   // Principal
   containerTouchO: {
     height: 270,
-    elevation: 2,
+
     backgroundColor: "#fff",
     marginTop: 10,
     marginHorizontal: 20,
@@ -164,28 +175,28 @@ export const styles = StyleSheet.create({
   },
   mensajeSuperior: {
     width: Dimensions.get("window").width,
-    height: "24%",
+    height: "28%",
     backgroundColor: "#00a46c",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-mensajeSuperiorInterna: {
-  width: Dimensions.get("window").width,
-  height: "20%",
-  backgroundColor: "#00a46c",
-  borderBottomLeftRadius: 20,
-  borderBottomRightRadius: 20,
-},
-  contenedorDeVarias:{ 
-    flexDirection:"row", 
-    backgroundColor: "#fff", 
-    justifyContent: "center", 
+  mensajeSuperiorInterna: {
+    width: Dimensions.get("window").width,
+    height: "27%",
+    backgroundColor: "#00a46c",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  contenedorDeVarias: {
+    flexDirection: "row",
+    backgroundColor: "red",
+    justifyContent: "center",
     alignItems: "center",
-    },
-textoNombrePlanta:{
-    fontWeight:"bold",
+  },
+  textoNombrePlanta: {
+    fontWeight: "bold",
     fontSize: RFValue(8),
-    justifyContent: 'center',
-    alignItems: 'center',   
-}
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
