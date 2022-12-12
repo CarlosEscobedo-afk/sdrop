@@ -1,83 +1,53 @@
 import React from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { StatusBar } from "expo-status-bar";
+import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from '../core/styles';
+import {  onSnapshot, orderBy,collection, query,where, getDocs} from "firebase/firestore";
+import { db } from '../firebase-config';
+import Planta from '../components/Planta';
+export default function Principal({ navigation }) {
 
-export default function Home({ navigation }) {
+
+  const [plantas, setPlanta] = React.useState([]);
+
+  React.useLayoutEffect(() =>{
+    const collectionRef = collection(db,'informacion');
+    const q = query(collectionRef,where('id','==',1))
+
+    const unsuscribe = onSnapshot(q, querySnapshot =>{
+      setPlanta(
+        querySnapshot.docs.map(doc=>({
+          id: doc.id,
+          name_planta: doc.data().name_planta,
+        }))
+      )
+    })
+    return unsuscribe;
+  },[])
+
+  
 
   return (
-
-    <View style={[styles.container, { flexDirection: "column" }]}>
-        <View style={ { 
-            flex: 0.3,
-            backgroundColor:"#00a46c",
-            height:"5%",
-            borderBottomLeftRadius:20,
-            borderBottomRightRadius:20,
-            paddingHorizontal:20
-            }} >
+    <View style={styles.container}>
+      <ScrollView>
+      <StatusBar style="auto" />
+        <View style={ styles.mensajeSuperior } >
             <View style={styles.headerContainer}>
                 <View style={ {width:"90%"} } >
-                    <Text style={ styles.headerText }>
-                        Hola Omar
+                     <Text style={ styles.headerText }>
+                      Hola 
                     </Text>
                     <Text style={ styles.HeaderText }>
                         Aquí podras ver las plantas que tienes actualmente.
                     </Text>
                 </View>
             </View>
-            
         </View>
-        <View style={{ 
-            flexDirection:"row", 
-            backgroundColor: "#FFF", 
-            justifyContent: "center", 
-            alignItems: "center",
-            
-            }} >
-            <View style={styles.containerPlanta}>
-              <TouchableOpacity 
-                  onPress={()=>navigation.navigate("Session_on")}
-                  style={ styles.containerTouchO }
-              >
-                <Image 
-                  style={{
-                      width: 180,
-                      height: 230,
-                      resizeMode: 'contain',
-                      borderRadius: 20,
-                  }}
-                  source={require('../assets/6.jpg')}/>
-                <View style={ styles.containerCard }>
-                  <Text style={{
-                      fontWeight:"bold"
-                  }}>Pilea peperomioides</Text>
-                </View>
-              </TouchableOpacity>
-            </View> 
-            
-            <View style={styles.containerPlanta}>
-              
-              <TouchableOpacity 
-                  onPress={()=>navigation.navigate("Session_on")}
-                  style={ styles.containerTouchO }
-              >
-                <Image 
-                  style={{
-                      width: 180,
-                      height: 230,
-                      resizeMode: 'contain',
-                      borderRadius: 20,
-                      
-                  }}
-                  source={require('../assets/6.jpg')}/>
-                <View style={ styles.containerCard }>
-                  <Text style={{
-                      fontWeight:"bold"
-                  }}>Pilea peperomioides</Text>
-                </View>
-              </TouchableOpacity>
-            </View>    
-        </View>
+
+
+        {plantas.map(planta=><Planta key={planta.id} {...planta}/>  )}
+        
+        
         <View style={{ 
                 flex: 1, 
                 backgroundColor: "#FFF", 
@@ -85,7 +55,6 @@ export default function Home({ navigation }) {
                 alignItems: "center",
                 }} >
                 <View style={styles.containerEstado}>
-
                     <Text style={ styles.infoTitulo }>
                         Una de tus plantas está  
                     </Text>
@@ -100,7 +69,6 @@ export default function Home({ navigation }) {
                             borderRadius: 40,
                         }}
                         source={require('../assets/sad.png')}/>
-
                     </View>
                     
                     <Text style={ styles.infoTitulo }>
@@ -109,6 +77,7 @@ export default function Home({ navigation }) {
                     
                 </View>
             </View>
+      </ScrollView>
     </View>
   );
 }
