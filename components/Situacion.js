@@ -9,6 +9,7 @@ export default function Situacion({
   hum_min,
   temp_max,
   temp_min,
+  name_planta,
 }) {
   function EstadoTexto() {
     if (hum > hum_min && hum < hum_max && temp > temp_min && temp < temp_max) {
@@ -87,6 +88,7 @@ export default function Situacion({
 
   return (
     <View>
+      <Text style={styles.infoTitulo}>Planta: {name_planta}</Text>
       <EstadoTexto />
       <Text style={styles.infoTitulo}>Tú planta está:</Text>
       <View style={styles.containerEstadoPlanta}>

@@ -18,6 +18,7 @@ export default function Planta({
       humMin: hum_min,
       tempMax: temp_max,
       tempMin: temp_min,
+      namePlanta: name_planta,
     });
   };
 

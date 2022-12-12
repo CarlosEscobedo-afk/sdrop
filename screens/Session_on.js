@@ -6,6 +6,7 @@ import Situacion from "../components/Situacion";
 import { db } from "../firebase-config";
 import { onSnapshot, collection, query, where } from "firebase/firestore";
 export default function Session_on({ route }) {
+  const { namePlanta } = route.params;
   const { humMax } = route.params;
   const { idSituacion } = route.params;
   const { humMin } = route.params;
@@ -29,6 +30,7 @@ export default function Session_on({ route }) {
           hum_min: humMin,
           temp_max: tempMax,
           temp_min: tempMin,
+          name_planta: namePlanta,
         }))
       );
     });
